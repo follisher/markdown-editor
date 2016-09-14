@@ -4,7 +4,7 @@
     height:100%;
     display: -webkit-box;
   }
-  .editor textarea{
+  .editor textarea.editorinput{
     width:50%;
     display: block;
     border:1px solid #ccc;
@@ -15,11 +15,12 @@
     border:1px solid #000;
     -webkit-box-flex:1;
     padding:0 20px;
+    overflow-y: scroll;
   }
 </style>
 <template>
   <div class="editor">
-      <textarea name="" id="" cols="30" rows="10" v-model="input"></textarea>
+      <textarea class="editorinput" name="" id="" cols="30" rows="10" v-model="input"></textarea>
       <div class="html" v-html="input | markRender"></div>
   </div>
 </template>
@@ -98,8 +99,8 @@ export default {
 
   },
   ready () {
-    let content = document.querySelector('.editor')
-    content.style.height = document.body.clientHeight + 'px'
+    let $ = el => document.querySelector(el)
+    $('.html').style.height = $('.editorinput').style.height = document.body.clientHeight + 'px'
     console.log(document.body.clientHeight)
   }
 }

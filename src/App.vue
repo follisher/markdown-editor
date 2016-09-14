@@ -28,7 +28,6 @@ body {
 
 <template>
   <div id="app">
-    <menu></menu>
     <router-view></router-view>
   </div>
 </template>

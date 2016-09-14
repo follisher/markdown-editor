@@ -42,7 +42,7 @@ module.exports = {
     loaders: [
       {
         test: /\.vue$/,
-        loader: ['vue', 'sass']
+        loader: 'vue'
       },
       {
         test: /\.js$/,
