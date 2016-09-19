@@ -1,4 +1,18 @@
 <style lang='scss'>
+  #control-panel{
+    height:100px;
+    button{
+      width:200px;
+      border:1px solid #429B36;
+      height:60px;
+      float: right;
+      margin:20px;
+      background: #7FB665;
+      color:#fff;
+      border-radius: 6px;
+      font-size: 20px;
+    }
+  }
   .editor{
     width: 100%;
     height:100%;
@@ -28,27 +42,33 @@
 </style>
 <template>
   <div class="editor">
+      <header id="control-panel">
+        <button class="btn" data-clipboard-target="#content">复制内容</button>
+      </header>
       <div class="editor-editarea">
         <textarea class="editorinput" name="" id="" cols="30" rows="10" v-model="input"></textarea>
-        <div class="html" v-html="input | markRender"></div>
+        <div id="content" class="html" id="html" v-html="input | markdownit"></div>
       </div>
   </div>
 </template>
 <script>
 import marked from 'marked'
+import MarkdownIt from 'markdown-it'
+import Clipboard from 'clipboard'
+
 let renderer = new marked.Renderer()
 let styleList = {
   title: {
-    h1: 'text-align:center;font-size:20px;margin-top:50px;margin-bottom:20px;',
-    h2: 'text-align:center;font-size:18px;margin-top:50px;margin-bottom:20px',
-    h3: 'text-align:center;font-size:16px;margin-top:40px;margin-bottom:10px',
-    h4: 'text-align:center;font-size:14px;margin-top:50px;'
+    h1: 'text-align:center;font-size:22px;margin-top:50px;margin-bottom:20px;color:#333',
+    h2: 'text-align:center;font-size:20px;margin-top:50px;margin-bottom:20px;color:#333',
+    h3: 'text-align:left;font-size:18px;margin-top:40px;margin-bottom:10px;color:#333',
+    h4: 'text-align:left;font-size:16px;margin-top:50px;color:#333'
   },
-  paragraph: 'font-size:15px;color:#777;line-height:1.75;text-align:justify;margin-top:30px;margin-bottom:30px',
+  paragraph: 'font-size:15px;color:#585858;line-height:1.75;text-align:justify;margin-top:30px;margin-bottom:30px',
   image: {
-    wrap: 'padding:0.05rem;border-width:1px;border-style:solid;border-color:#ccc;',
+    wrap: 'padding:0.4rem;border-width:1px;border-style:solid;border-color:#f2f2f2;margin-bottom:20px;background:#fafafa',
     img: 'width:100%;height:auto;vertical-align:top',
-    txt: 'color:#ccc;font-size:.7rem;text-align:center;line-height:1.5;margin:1px 0;display:block'
+    txt: 'color:#777;font-size:.7rem;text-align:center;line-height:1.5;margin:1px 0;display:block'
   },
   blockquote: {
     wrap: 'background:#e7e7e7;color:#666;padding:20px;padding-top:10px;padding-bottom:10px;margin:0;font-size:14px;line-height:1.5;overflow:hidden;margin-bottom:30px',
@@ -62,61 +82,95 @@ let styleList = {
       point: 'display:block;float:left;line-height:1.5;margin-right:10px;',
       txt: 'overflow:hidden;line-height:1.5;display:block'
     }
-
   }
 }
 
-renderer.heading = (text, level) => {
+let md = new MarkdownIt({
+  html: false,
+  linkify: true,
+  typographer: true
+})
+
+let clipboard = new Clipboard('.btn')
+
+clipboard.on('success', (e) => {
+  console.log(e)
+})
+
+md.renderer.rules.link_open = (tokens, idx) => {
+  var title = tokens[idx].title ? (' title="' + md.utils.escapeHtml(md.utils.replaceEntities(tokens[idx].title)) + '"') : ''
+  return '<a class="' + md.utils.escapeHtml(tokens[idx].href) + '"' + title + ' target="_blank">'
+}
+
+md.renderer.rules.blockquote_open = (tokens, idx) => {
+  let { wrap, quote, txt } = styleList.blockquote
+  return '<blockquote style=' + wrap + '><strong style=' + quote + '>“</strong><em style=' + txt + '>'
+}
+
+md.renderer.rules.blockquote_close = (token, idx) => {
+  return '</em></blockquote>'
+}
+
+md.renderer.rules.paragraph_open = (token, idx) => {
+  let style = styleList.paragraph
+  let tag = '<p style=' + style + '>'
+  token[idx + 1].children[0].tag === 'img' ? style = styleList.image.wrap : style = styleList.paragraph
+  token[idx].level === 2 ? tag = '' : tag = '<p style=' + style + '>'
+  return tag
+}
+
+md.renderer.rules.image = (tokens, idx, options, env, slf) => {
+  let token = tokens[idx]
+  let hasText = ''
+  let txt = slf.renderInlineAsText(token.children)
+
+  txt ? hasText = '<span style=' + styleList.image.txt + '>' + txt + '</span>' : ''
+
+  token.attrs[token.attrIndex('alt')][1] = txt
+
+  return '<img style=' + styleList.image.img + ' src=' + token.attrGet('src') + '>' + hasText
+}
+
+md.renderer.rules.heading_open = (tokens, idx, options, env, slf) => {
   let style = ''
-  switch (level) {
-    case 1:
+  switch (tokens[idx].tag) {
+    case 'h1':
       style = styleList.title.h1
       break
-    case 2:
+    case 'h2':
       style = styleList.title.h2
       break
-    case 3:
+    case 'h3':
       style = styleList.title.h3
       break
-    case 4:
+    case 'h4':
       style = styleList.title.h4
       break
     default:
       style = styleList.title.h2
       break
   }
-
-  return '<h' + level + ' style="' + style + '">' + text + '</h' + level + '>'
+  return '<' + tokens[idx].tag + ' style=' + style + '>'
 }
 
-renderer.paragraph = (text) => {
-  let style = styleList.paragraph
-  return '<p style=' + style + '>' + text + '</p>'
+md.renderer.rules.bullet_list_open = (tokens, idx, options, env, slf) => {
+  return '<p style=' + styleList.list.wrap + '>'
 }
-
-renderer.image = (url, title, text) => {
-  let { wrap, img, txt } = styleList.image
-  let textHtml = ''
-  text ? textHtml = '<span style=' + txt + '>' + text + '</span>' : textHtml = ''
-  return '<p style=' + wrap + '><img src=' + url + ' style=' + img + '>' + textHtml + '</p>'
+md.renderer.rules.bullet_list_close = (tokens, idx, options, env, slf) => {
+  // console.log(tokens[idx])
+  return '</p>'
 }
-
-renderer.blockquote = (text) => {
-  let { wrap, quote, txt } = styleList.blockquote
-  return '<blockquote style=' + wrap + '><strong style=' + quote + '>“</strong><em style=' + txt + '>' + text + '</em></blockqoute>'
-}
-
-renderer.list = (body, ordered) => {
-  let style = styleList.list.wrap
-  ordered ? console.log(1) : console.log(2)
-  return '<p style=' + style + '>' + body + '</p>'
-}
-renderer.listitem = (list) => {
+md.renderer.rules.list_item_open = (tokens, idx, options, env, slf) => {
   let { wrap, point, txt } = styleList.list.item
-  console.log(this)
-  return '<span style=' + wrap + '><span style=' + point + '>・</span><span style=' + txt + '>' + list + '</span>'
+  return '<span style=' + wrap + '><span style=' + point + '>・</span><span style=' + txt + '>'
+}
+md.renderer.rules.list_item_close = (tokens, idx, options, env, slf) => {
+  return '</span></span>'
 }
 
+// md.block.ruler.before('paragraph', 'myrule', (state) => {
+//   return 'test'
+// })
 export default {
   data () {
     return {
@@ -129,6 +183,11 @@ export default {
       return marked(val, {
         renderer: renderer
       })
+    },
+    markdownit (val) {
+      // let $ = el => document.getElementById(el)
+      // console.log($('html').querySelectorAll('p'))
+      return md.render(val)
     }
   },
   methods: {
@@ -139,7 +198,7 @@ export default {
   },
   ready () {
     let $ = el => document.querySelector(el)
-    $('.html').style.height = $('.editorinput').style.height = document.body.clientHeight + 'px'
+    $('.html').style.height = $('.editorinput').style.height = document.body.clientHeight - 100 + 'px'
   }
 }
 
