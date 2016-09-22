@@ -111,7 +111,7 @@ md.renderer.rules.blockquote_close = (token, idx) => {
 md.renderer.rules.paragraph_open = (token, idx) => {
   let style = styleList.paragraph
   let tag = '<p style=' + style + '>'
-  if (token[idx + 1].children[0].tag) {
+  if (token[idx + 1].children[0]) {
     token[idx + 1].children[0].tag === 'img' ? style = styleList.image.wrap : style = styleList.paragraph
   }
   token[idx].level === 2 ? tag = '' : tag = '<p style=' + style + '>'
