@@ -7,7 +7,8 @@ import router from './router/index'
 Vue.use(VueRouter)
 
 Vue.use(RadonInstall, {
-  Modal: true
+  Modal: true,
+  Notification: true
 })
 
 /* eslint-disable no-new */
