@@ -71,7 +71,7 @@ let styleList = {
   image: {
     wrap: 'padding:0.4rem;border-width:1px;border-style:solid;border-color:#f2f2f2;margin-bottom:20px;background:#fafafa',
     img: 'width:100%;height:auto;vertical-align:top',
-    txt: 'color:#777;font-size:.7rem;text-align:center;line-height:1.5;margin:1px 0;display:block'
+    txt: 'color:#777;font-size:.7rem;text-align:center;line-height:1.5;display:block;margin-top:5px'
   },
   blockquote: {
     wrap: 'background:#e7e7e7;color:#666;padding:20px;padding-top:10px;padding-bottom:10px;margin:0;font-size:14px;line-height:1.5;overflow:hidden;margin-bottom:30px',
