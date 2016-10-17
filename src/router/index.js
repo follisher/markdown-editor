@@ -8,7 +8,7 @@ const router = new VueRouter()
 router.map({
   // Index
   '/': {
-    name: 'indexa',
+    name: 'index',
     component: (resolve) => {
       require(['../views/index.vue'], resolve)
     }

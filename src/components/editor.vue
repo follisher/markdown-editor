@@ -61,7 +61,7 @@ let renderer = new marked.Renderer()
 let styleList = {
   title: {
     h1: 'text-align:center;font-size:22px;margin-top:50px;margin-bottom:20px;color:#333',
-    h2: 'text-align:center;font-size:20px;margin-top:50px;margin-bottom:20px;color:#333',
+    h2: 'border-left-width:6px;border-left-style:solid;border-left-color:#ff5500;text-align:left;font-size:22px;margin-top:50px;margin-bottom:20px;color:#383838;background:#f2f2f2;padding-left:10px;padding-right:14px;padding-top:4px;padding-bottom:4px;',
     h3: 'text-align:left;font-size:18px;margin-top:40px;margin-bottom:10px;color:#333',
     h4: 'text-align:center;font-size:16px;margin-top:50px;color:#333',
     h5: 'text-align:left;font-size:18px;color:#333;margin-bottom:0',

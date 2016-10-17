@@ -34,7 +34,6 @@ body {
 </template>
 
 <script>
-import Hello from './components/Hello'
 import Menu from './components/Menu'
 import { rdDatepicker, rdSwitch } from 'radon-ui'
 
@@ -55,7 +54,6 @@ export default {
     }
   },
   components: {
-    Hello,
     rdDatepicker,
     rdSwitch,
     Menu
