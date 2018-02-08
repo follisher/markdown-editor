@@ -1,7 +1,7 @@
 import MarkdownIt from 'markdown-it'
 
 let md = new MarkdownIt({
-  html: false,
+  html: true,
   linkify: true,
   typographer: true,
   breaks: true
@@ -30,6 +30,9 @@ const templates = (styleList) => {
     }
     token[idx].level === 2 ? tag = '' : tag = '<p style=' + style + '>'
     return tag
+  }
+  md.renderer.rules.paragraph_close = (token, idx) => {
+    return '</p>'
   }
 
   md.renderer.rules.image = (tokens, idx, options, env, slf) => {
@@ -73,11 +76,11 @@ const templates = (styleList) => {
   }
 
   md.renderer.rules.bullet_list_open = (tokens, idx, options, env, slf) => {
-    return '<p style=' + styleList.list.wrap + '>'
+    return '<section style=' + styleList.list.wrap + '>'
   }
   md.renderer.rules.bullet_list_close = (tokens, idx, options, env, slf) => {
     // console.log(tokens[idx])
-    return '</p>'
+    return '</section>'
   }
   md.renderer.rules.list_item_open = (tokens, idx, options, env, slf) => {
     let { wrap, point, txt } = styleList.list.item

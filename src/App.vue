@@ -1,5 +1,4 @@
 
-<style src="radon-ui/dist/static/css/dist.css"></style>
 <style>
 html {
   height: 100%;
@@ -29,13 +28,11 @@ body {
 <template>
   <div id="app">
     <router-view></router-view>
-    <rd-notification></rd-notification>
   </div>
 </template>
 
 <script>
 import Menu from './components/Menu'
-import { rdDatepicker, rdSwitch } from 'radon-ui'
 
 export default {
   data () {
@@ -54,19 +51,9 @@ export default {
     }
   },
   components: {
-    rdDatepicker,
-    rdSwitch,
     Menu
   },
   methods: {
-    test () {
-      this.$Modal.confirm('aa', 'test', () => {
-        console.log('ok')
-      },
-      () => {
-        console.log('cancel')
-      })
-    }
   }
 }
 </script>

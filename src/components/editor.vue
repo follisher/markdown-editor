@@ -1,4 +1,8 @@
 <style lang='scss'>
+body {
+  margin: 0;
+  padding: 0;
+}
   #control-panel{
     height:100px;
     background:#4e668a;
@@ -68,6 +72,20 @@
       }
     }
   }
+  .ys-editor-style-head {
+    height: 0;
+    line-height: 0;
+    overflow: hidden;
+    display: block;
+    margin-top: 0;
+  }
+  .ys-editor-style-content {
+    margin-top: 0;
+  }
+  .ys-editor-style-content section:first,
+  .ys-editor-style-content h2:first {
+    margin-top: 0;
+  }
 </style>
 <template>
   <div class="editor">
@@ -79,7 +97,10 @@
       </header>
       <div class="editor-editarea">
         <textarea class="editorinput" name="" id="" cols="30" rows="10" v-model="input" placeholder="请在这里输入或粘贴 Markdown 格式的文稿"></textarea>
-        <div id="content" class="html" id="html" v-html="input | markdownit"></div>
+        <div id="content" class="html" id="html">
+          <section class="ys-editor-style-head">此篇大概阅读 15 分钟</section>
+          <section class="ys-editor-style-content" style="max-width:100%;overflow:hidden" v-html="input | markdownit"></section>
+        </div>
       </div>
   </div>
 </template>
@@ -126,7 +147,7 @@ export default {
     $('.html').style.height = $('.editorinput').style.height = document.body.clientHeight - 100 + 'px'
     let clipboard = new Clipboard('.btn')
     clipboard.on('success', e => {
-      this.$Notification.success('复制成功', '', 3000)
+      console.log('复制成功')
     })
   }
 }
