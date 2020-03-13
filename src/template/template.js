@@ -58,5 +58,65 @@ export default {
         txt: 'overflow:hidden;line-height:1.5;display:block'
       }
     }
+  },
+  art: {
+    name: '艺术模板',
+    title: {
+      h1: 'text-align:left;font-size:22px;margin-top:50px;margin-bottom:20px;color:#333',
+      h2: 'text-align:center;font-size:22px;margin-bottom:20px;color:#D46B08;',
+      h3: 'text-align:center;font-size:18px;margin-top:40px;margin-bottom:10px;color:#333',
+      h4: 'text-align:left;font-size:16px;margin-top:50px;color:#333',
+      h5: 'text-align:left;font-size:18px;color:#333;margin-bottom:0',
+      h6: 'text-align:left;font-size:14px;color:#999;margin-top:0;margin-bottom:0'
+    },
+    paragraph: 'font-size:18px;color:#666;line-height:1.75;text-align:left;margin-top:30px;margin-bottom:60px;font-weight:100;font-family:serif',
+    image: {
+      wrap: 'margin-bottom:60px;text-align:center',
+      img: 'height:auto;vertical-align:top',
+      txt: 'color:#777;font-size:.7rem;text-align:center;line-height:1.5;display:block;margin-top:5px'
+    },
+    blockquote: {
+      wrap: 'background:#e7e7e7;color:#666;padding:20px;padding-top:10px;padding-bottom:10px;margin:0;font-size:14px;line-height:1.5;overflow:hidden;margin-bottom:30px',
+      quote: 'font-size:50px;height:30px;margin-top:10px;color:#aaa9a9;font-family:Georgia,serif;float:left;margin-right:10px;',
+      txt: 'display:block;overflow:hidden;color:#979797;text-align:justify'
+    },
+    list: {
+      wrap: 'text-align:justify;margin-top:30px;margin-bottom:30px;font-size:14px;color:#999;background:#fafafa;padding:10px;padding-left:20px;padding-right:20px;border-width:6px;border-style:solid;border-color:#ececec',
+      item: {
+        wrap: 'display:block;margin-top:20px;margin-bottom:20px;',
+        point: 'display:block;float:left;line-height:1.5;margin-right:10px;',
+        txt: 'overflow:hidden;line-height:1.5;display:block'
+      }
+    }
+  },
+  serious: {
+    name: '严肃模板',
+    title: {
+      h1: 'text-align:left;font-size:22px;margin-top:50px;margin-bottom:20px;color:#333',
+      h2: 'text-align:center;font-size:22px;margin-bottom:20px;color:#D46B08;',
+      h3: 'background: 0px center rgb(255, 255, 255);border-width: 0px;border-style: initial;border-color: initial;vertical-align: baseline;font-variant-numeric: inherit;font-variant-east-asian: inherit;font-weight: 700;font-stretch: inherit;font-size: 20px;font-family: STHeiti, "Microsoft YaHei", 黑体, sans-serif, Arial;color: rgb(0, 0, 0);text-align: center;white-space: normal;margin-left: 8px;margin-right: 8px;margin-bottom: 25px;line-height: 1.75em;font-size: 18px;text-align:center',
+      h4: 'text-align:left;font-size:16px;margin-top:50px;color:#333',
+      h5: 'text-align:left;font-size:18px;color:#333;margin-bottom:0',
+      h6: 'text-align:left;font-size:14px;color:#999;margin-top:0;margin-bottom:0'
+    },
+    paragraph: 'background: 0px center rgb(255, 255, 255);border-width: 0px;border-style: initial;border-color: initial;vertical-align: baseline;font-variant-numeric: inherit;font-variant-east-asian: inherit;font-stretch: inherit;font-size: 16px;font-family: STHeiti, "Microsoft YaHei", 黑体, sans-serif, Arial;color: rgb(14, 14, 14);text-align: justify;white-space: normal;margin-left: 8px;margin-right: 8px;margin-bottom: 25px;line-height: 1.75em;font-size: 16px;text-align:left',
+    image: {
+      wrap: 'margin-bottom:60px;text-align:center',
+      img: 'height:auto;vertical-align:top',
+      txt: 'color:#777;font-size:.7rem;text-align:center;line-height:1.5;display:block;margin-top:5px'
+    },
+    blockquote: {
+      wrap: 'background:#e7e7e7;color:#666;padding:20px;padding-top:10px;padding-bottom:10px;margin:0;font-size:14px;line-height:1.5;overflow:hidden;margin-bottom:30px',
+      quote: 'font-size:50px;height:30px;margin-top:10px;color:#aaa9a9;font-family:Georgia,serif;float:left;margin-right:10px;',
+      txt: 'display:block;overflow:hidden;color:#979797;text-align:justify'
+    },
+    list: {
+      wrap: 'text-align:justify;margin-top:30px;margin-bottom:30px;font-size:14px;color:#999;background:#fafafa;padding:10px;padding-left:20px;padding-right:20px;border-width:6px;border-style:solid;border-color:#ececec',
+      item: {
+        wrap: 'display:block;margin-top:20px;margin-bottom:20px;',
+        point: 'display:block;float:left;line-height:1.5;margin-right:10px;',
+        txt: 'overflow:hidden;line-height:1.5;display:block'
+      }
+    }
   }
 }

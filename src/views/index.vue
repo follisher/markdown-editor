@@ -1,10 +1,10 @@
 <template>
   <div id='index-vue'>
     <p>{{title}}</p>
+    <ul class='book-list'>
+      <li is='single-book' v-for='(item, idx) in templateList' :key="idx" :item='item'></li>
+    </ul>
   </div>
-  <ul class='book-list'>
-    <li is='single-book' v-for='item in templateList' :item='item'></li>
-  </ul>
 </template>
 
 <script>
